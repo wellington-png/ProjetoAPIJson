@@ -19,12 +19,12 @@ const ModalComponent = ({ isOpen, onClose, projectors, people }) => {
 
   const handleProjectorChange = (event) => {
     setSelectedProjector(event.target.value);
-    setProjetor(event.target.value);
+    setProjetor(event.target.children[event.target.selectedIndex].text);
   };
 
   const handlePersonChange = (event) => {
     setSelectedPerson(event.target.value);
-    setPessoa(event.target.value);
+    setPessoa(event.target.children[event.target.selectedIndex].text);
   };
 
   const handleSubmit = () => {
@@ -34,6 +34,11 @@ const ModalComponent = ({ isOpen, onClose, projectors, people }) => {
       title: agendamento.pessoa,
       start: agendamento.start,
       end: agendamento.end,
+      allDay: agendamento.allDay,
+      extendedProps: {
+        projetor: agendamento.projetor,
+        pessoa: agendamento.pessoa,
+      }
     });
 
     axios.post(`${apiURL}/agendamentos`, {
@@ -41,16 +46,19 @@ const ModalComponent = ({ isOpen, onClose, projectors, people }) => {
       title: agendamento.pessoa,
       start: agendamento.start,
       end: agendamento.end,
-      projetor: agendamento.projetor,
-      pessoa: agendamento.pessoa,
+      allDay: agendamento.allDay,
+      extendsProps: {
+        projetor: agendamento.projetor,
+        pessoa: agendamento.pessoa,
+      }                                                                   
     })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-      alert('Erro ao salvar agendamento')
-    });
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert('Erro ao salvar agendamento')
+      });
 
     submeterAgendamento();
     onClose();

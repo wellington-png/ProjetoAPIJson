@@ -7,3 +7,5 @@ front:
 install:
 	cd backend && npm install
 	cd frontend && npm install
+start-all:
+	make back & make front

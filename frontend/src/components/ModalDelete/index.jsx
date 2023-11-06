@@ -21,11 +21,6 @@ const DeleteModal = ({ isOpen, onClose, eventId, onDelete }) => {
     window.location.reload();
   };
 
-//   chagem eventId
-  useEffect(() => {
-    console.log("eventID: ", eventId);
-  }, [eventId]);
-
   return (
     <div className={`${styles.modal} ${isOpen ? styles['is-active'] : ''}`}>
       <div className={styles['modal-background']} onClick={onClose}></div>

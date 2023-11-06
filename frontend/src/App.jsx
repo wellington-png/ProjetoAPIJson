@@ -30,15 +30,18 @@ function DemoApp() {
   } = useAgendamentoContext();
 
   const projectors = [
-    { id: 1, name: 'Projetor 1' },
-    { id: 2, name: 'Projetor 2' },
-    // Adicione mais projetores conforme necessário
+    { id: 1, name: 'Projetor Tomate 235r' },
+    { id: 2, name: 'Projetor Pior que o Tomate' },
+    { id: 3, name: 'Projetor EPSON preto' },
+    { id: 4, name: 'Projetor EPSON branco' },
   ];
 
   const people = [
-    { id: 1, name: 'Pessoa 1' },
-    { id: 2, name: 'Pessoa 2' },
-    // Adicione mais pessoas conforme necessário
+    { id: 1, name: 'Karl' },
+    { id: 2, name: 'Estevão' },
+    { id: 3, name: 'Felipe' },
+    { id: 4, name: 'Edson' },
+    { id: 5, name: 'Autino' },
   ];
 
   const openModal = (selectInfo) => {
@@ -46,6 +49,7 @@ function DemoApp() {
     setStart(selectInfo.startStr);
     setEnd(selectInfo.endStr);
     setCalendarApi(selectInfo.view.calendar);
+    console.log();
     setId(createEventId());
     setIsModalOpen(true);
   };
@@ -76,31 +80,20 @@ function DemoApp() {
 
 
   const handleEventClick = (clickInfo) => {
-    console.log(clickInfo.event.id);
     setSelectedEventId(clickInfo.event.id); // Armazena o ID do evento selecionado
     openDeleteModal(clickInfo);
   };
 
   const handleEvents = (events) => {
-    if (events.length > 0) {
-      console.log(events);
-    }
     setCurrentEvents(events);
   };
 
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    // Faça uma solicitação à sua API para obter os eventos
     axios.get('http://localhost:8080/agendamentos')
       .then(response => {
-        const eventData = response.data.map(event => ({
-          id: event.id,
-          title: event.title,
-          start: event.start,
-          end: event.end,
-          allDay: event.allDay,
-        }));
+        const eventData = response.data
         setEvents(eventData);
       })
       .catch(error => {
@@ -117,7 +110,6 @@ function DemoApp() {
       allDay: dropInfo.event.allDay,
     };
   
-    // Faça uma solicitação à API para atualizar o evento arrastado
     axios.put(`${apiURL}/agendamentos/${updatedEvent.id}`, updatedEvent)
       .then(function (response) {
         console.log(response);
@@ -137,7 +129,6 @@ function DemoApp() {
       allDay: resizeInfo.event.allDay,
     };
   
-    // Faça uma solicitação à API para atualizar o evento redimensionado
     axios.put(`${apiURL}/agendamentos/${updatedEvent.id}`, updatedEvent)
       .then(function (response) {
         console.log(response);
@@ -190,7 +181,7 @@ function DemoApp() {
           eventClick={handleEventClick}
           eventsSet={handleEvents}
 
-          eventDrop={handleEventDrop} // Função chamada ao soltar um evento arrastado
+          eventDrop={handleEventDrop}
           eventResize={handleEventResize}
 
           eventDragStart={(dragInfo) => setDraggedEvent(dragInfo.event)}
